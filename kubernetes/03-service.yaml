@@ -5,6 +5,7 @@ metadata:
   labels:
     app: chuck
   name: chuck
+  namespace: chuck
 spec:
   ports:
   - port: 5000
