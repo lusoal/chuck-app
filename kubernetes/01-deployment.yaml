@@ -5,7 +5,7 @@ metadata:
   labels:
     app: chuck
   name: chuck
-  namespace: chuk
+  namespace: chuck
 spec:
   replicas: 2
   selector:
