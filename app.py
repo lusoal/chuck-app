@@ -41,10 +41,9 @@ def random_facts():
 @app.route('/whereIsRunnig', methods=['GET'])
 @app.route('/whereIsRunnig/', methods=['GET'])
 def where_is_running():
-    # instance_id = requests.get("http://169.254.169.254/latest/meta-data/instance-id")
-    instance_id = "i-0349fd51e5ad5d48f"
+    instance_id = requests.get("http://169.254.169.254/latest/meta-data/instance-id")
     
-    ec2 = boto3.resource('ec2')
+    ec2 = boto3.resource('ec2', region_name="us-east-1")
     ec2instance = ec2.Instance(instance_id)
     
     cluster_type = {"type" : "Managed", "platform" : "EKS"}
