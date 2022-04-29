@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: chuck
   name: chuck
@@ -14,14 +13,12 @@ spec:
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: chuck
     spec:
       containers:
-      - image: 132527949143.dkr.ecr.us-east-1.amazonaws.com/chuck:latest
+      - image: __IMAGE_URI__
         name: chuck
         ports:
         - containerPort: 5000
         resources: {}
-status: {}
