@@ -4,6 +4,7 @@ metadata:
   name: ingress-chuck
   namespace: chuck
 spec:
+  ingressClassName: nginx
   rules:
   - host: "chuck.tfcsummit.douglasramiro.me"
     http:
