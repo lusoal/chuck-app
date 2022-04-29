@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, send_file, jsonify, 
 import requests
 from bs4 import BeautifulSoup
 from flask_cors import CORS
+import boto3
 
 from get_images import *
 
@@ -37,6 +38,32 @@ def random_facts():
     response.headers["Content-Type"] = "application/json"
     return response
 
+@app.route('/whereIsRunnig', methods=['GET'])
+@app.route('/whereIsRunnig/', methods=['GET'])
+def where_is_running():
+    # instance_id = requests.get("http://169.254.169.254/latest/meta-data/instance-id")
+    instance_id = "i-0349fd51e5ad5d48f"
+    
+    ec2 = boto3.resource('ec2')
+    ec2instance = ec2.Instance(instance_id)
+    
+    cluster_type = {"type" : "Managed", "platform" : "EKS"}
+    
+    for tags in ec2instance.tags:
+        if "kops" in tags['Key']:
+            cluster_type = {"type" : "Self-Managed", "platform" : "kOps"}
+            break
+    
+    response = make_response(
+                jsonify(cluster_type),
+                200,
+            )
+    response.headers["Content-Type"] = "application/json"
+    
+    return response
+
+    
+    
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000,debug=True)
